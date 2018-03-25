@@ -84,9 +84,12 @@ routeProps[mergedActionPropertyName] = {
 Ember.Route.reopen(routeProps);
 
 Ember.Router.reopen({
-  updateTitle: Ember.on('didTransition', function() {
-    this.send('collectTitleTokens', []);
-  }),
+  actions: {
+    didTransition() {
+      this.send('collectTitleTokens', []);
+      return true;
+    }
+  },
 
   setTitle: function(title) {
     var container = getOwner ? getOwner(this) : this.container;
